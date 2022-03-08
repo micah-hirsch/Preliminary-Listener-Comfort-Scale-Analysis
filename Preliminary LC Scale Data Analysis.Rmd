@@ -1,0 +1,241 @@
+---
+title: "Listener Comfort Scale Preliminary Analysis"
+author: "Micah E. Hirsch"
+date: "3/7/2022"
+output: html_document
+---
+
+This is the preliminary analysis rmd file for the listener comfort scale. This analysis is primarily a descriptive analysis to check for trends in the data. Plots/data visualizations will also be generated. This work is part of Peyton Davis' undergraduate Honors in the Major thesis project at Florida State University.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Load Packages
+
+```{r}
+
+library(rio)
+library(tidyverse)
+library(furniture)
+library(corrr)
+library(ggpubr)
+
+```
+
+# Loading the dataset
+
+This is the clean and deidentified version of the dataset. Code showing how this data was prepped can also be found in the following GitHub Repository: https://github.com/micah-hirsch/Preliminary-Listener-Comfort-Scale-Analysis
+
+```{r}
+
+LCscale_data <- rio::import("LCscale_CleanData.csv")
+
+```
+
+# Participant Demographics
+
+```{r}
+
+Listeners <- LCscale_data %>%
+  furniture::table1(Age, Gender, Race, Ethnicity, Familiar_CSD)
+
+Listeners
+
+```
+
+# Descriptive Statistics
+
+## Means and SD
+
+```{r}
+
+Descriptives_overall <- LCscale_data %>%
+  dplyr::summarize(LC_Score = mean(LC_overallScore), LC_sd = sd(LC_overallScore),
+                   S_Score = mean(S_overallScore), S_sd = sd(S_overallScore),
+                   S_Cogn = mean(S_cogn_score), S_Cogn_sd = sd(S_cogn_score),
+                   S_personality = mean(S_personality_score), S_personality_sd = sd(S_personality_score),
+                   S_emotion = mean(S_emotion_score), LC_sd = sd(S_emotion_score))
+
+Descriptives_overall
+
+Descriptives_bySpeaker <- LCscale_data %>%
+  dplyr::group_by(Speaker) %>%
+  dplyr::summarize(LC_Score = mean(LC_overallScore), LC_sd = sd(LC_overallScore),
+                   S_Score = mean(S_overallScore), S_sd = sd(S_overallScore),
+                   S_Cogn = mean(S_cogn_score), S_Cogn_sd = sd(S_cogn_score),
+                   S_personality = mean(S_personality_score), S_personality_sd = sd(S_personality_score),
+                   S_emotion = mean(S_emotion_score), LC_sd = sd(S_emotion_score))
+
+Descriptives_bySpeaker
+
+```
+
+## Data Vis
+
+```{r}
+
+LC_score_plot <- Descriptives_bySpeaker %>%
+  ggplot() +
+  aes(x = Speaker,
+      y = LC_Score,
+      fill = Speaker) +
+  geom_col(stat = "identity") +
+  geom_errorbar(aes(ymin = LC_Score-LC_sd, ymax = LC_Score+LC_sd), width = .2) +
+  ylab("Listener Comfort Scale Score") +
+  theme_classic()
+
+LC_score_plot
+
+S_score_plot <- Descriptives_bySpeaker %>%
+  ggplot() +
+  aes(x = Speaker,
+      y = S_Score,
+      fill = Speaker) +
+  geom_col(stat = "identity") +
+  geom_errorbar(aes(ymin = S_Score-S_sd, ymax = S_Score+S_sd), width = .2) +
+  ylab("Rating Scale Score") +
+  theme_classic()
+
+S_score_plot
+
+```
+
+
+## Correlations
+
+```{r}
+
+CorrMatrix <- LCscale_data %>%
+  dplyr::select(!c(ID:S20)) %>%
+  correlate()
+
+CorrMatrix
+
+```
+
+## Group Differences
+
+### LC Score
+
+```{r}
+
+# Creating Dysarthria and HC data frames
+
+Dysarthria <- LCscale_data %>%
+  dplyr::filter(Speaker == "Dysarthria")
+
+HC <- LCscale_data %>%
+  dplyr::filter(Speaker == "HC")
+
+# Assumption Check
+
+## Checking Normality
+
+with(LCscale_data, shapiro.test(LC_overallScore[Speaker == "HC"]))
+with(LCscale_data, shapiro.test(LC_overallScore[Speaker == "Dysarthria"]))
+
+## Equal Variance Check
+
+res.ftest.LC <- var.test(LC_overallScore ~ Speaker, data = LCscale_data)
+res.ftest.LC
+
+# Model Results
+
+LC_diff <- t.test(HC$LC_overallScore, Dysarthria$LC_overallScore, var.equal = T)
+LC_diff
+
+```
+
+### Scholderle Overall Score
+
+```{r}
+
+# Assumption Check
+
+## Checking Normality
+
+with(LCscale_data, shapiro.test(S_overallScore[Speaker == "HC"]))
+with(LCscale_data, shapiro.test(S_overallScore[Speaker == "Dysarthria"]))
+
+## Equal Variance Check
+
+res.ftest.S <- var.test(S_overallScore ~ Speaker, data = LCscale_data)
+res.ftest.S
+
+# Model Results
+
+S_diff <- t.test(HC$S_overallScore, Dysarthria$S_overallScore, var.equal = T)
+S_diff
+
+```
+
+### Scholderle Cognition Subscore
+
+```{r}
+
+# Assumption Check
+
+## Checking Normality
+
+with(LCscale_data, shapiro.test(S_cogn_score[Speaker == "HC"]))
+with(LCscale_data, shapiro.test(S_cogn_score[Speaker == "Dysarthria"]))
+
+## Equal Variance Check
+
+res.ftest.Cogn <- var.test(S_cogn_score ~ Speaker, data = LCscale_data)
+res.ftest.Cogn
+
+# Model Results
+
+Cogn_diff <- t.test(HC$S_cogn_score, Dysarthria$S_cogn_score, var.equal = T)
+Cogn_diff
+
+```
+
+### Scholderle Personality Subscore
+
+```{r}
+
+# Assumption Check
+
+## Checking Normality
+
+with(LCscale_data, shapiro.test(S_personality_score[Speaker == "HC"]))
+with(LCscale_data, shapiro.test(S_personality_score[Speaker == "Dysarthria"]))
+
+## Equal Variance Check
+
+res.ftest.Personality <- var.test(S_personality_score ~ Speaker, data = LCscale_data)
+res.ftest.Personality
+
+# Model Results
+
+Personality_diff <- t.test(HC$S_personality_score, Dysarthria$S_personality_score, var.equal = T)
+Personality_diff
+
+```
+
+### Emotion
+
+```{r}
+
+# Assumption Check
+
+## Checking Normality
+
+with(LCscale_data, shapiro.test(S_emotion_score[Speaker == "HC"]))
+with(LCscale_data, shapiro.test(S_emotion_score[Speaker == "Dysarthria"]))
+
+## Equal Variance Check
+
+res.ftest.Emotion <- var.test(S_emotion_score ~ Speaker, data = LCscale_data)
+res.ftest.Emotion
+
+# Model Results
+
+Emotion_diff <- t.test(HC$S_emotion_score, Dysarthria$S_emotion_score, var.equal = T)
+Emotion_diff
+
+```
+
