@@ -35,6 +35,8 @@ LCscale_data <- rio::import("LCscale_CleanData.csv")
 
 # Participant Demographics
 
+These are the demographic information for the participants in our pilot study (age, gender, race, ethnicity, and whether participants were familiar with communication disorders (Familiar_CSD))
+
 ```{r}
 
 Listeners <- LCscale_data %>%
@@ -45,6 +47,8 @@ Listeners
 ```
 
 # Descriptive Statistics
+
+The descriptive statistics (means and standard deviations) for the average overall scores for the listener comfort scale (LC_Score), Schölderle et al. (2019) overall attitudes scale score (S_Score), and the three subscores from the Schölderle et al. (2019) attitudes scale: Cognition and Language (S_Cogn), Personality (S_personality), and emotional reaction (S_emotion). The first output is for all 10 listeners. The second output groups by the speaker (a healthy control (HC) speaker or a speaker with dysarthria) that the listeners heard during the study.
 
 ## Means and SD
 
@@ -73,6 +77,8 @@ Descriptives_bySpeaker
 
 ## Data Vis
 
+Bar charts for the overall average scores for the listener comfort scale and the Schölderle et al. (2019) attitudes scale.
+
 ```{r}
 
 LC_score_plot <- Descriptives_bySpeaker %>%
@@ -94,15 +100,20 @@ S_score_plot <- Descriptives_bySpeaker %>%
       fill = Speaker) +
   geom_col(stat = "identity") +
   geom_errorbar(aes(ymin = S_Score-S_sd, ymax = S_Score+S_sd), width = .2) +
-  ylab("Rating Scale Score") +
+  ylab("Attitudes Scale Score") +
   theme_classic()
 
 S_score_plot
+
+Score_plots <- ggarrange(LC_score_plot, S_score_plot, common.legend = T, legend = "bottom", labels = c("A", "B"), nrow = 1, ncol = 2)
+ggsave("Plots/Score_plots.png", plot = last_plot(), width = 10, height = 5, units = "in", scale = .8)
 
 ```
 
 
 ## Correlations
+
+This a correlation matrix between the overall listener comfort score, the overall attitudes scale (Scholderle et al., 2019) score, and the three subscores from the Schölderle et al. (2019) attitudes scale. One of the main things to note is that the correlation between the listener comfort overall score and the Schölderle attitudes overall score is strong and positive (r=.860, p=.001). 
 
 ```{r}
 
@@ -112,11 +123,15 @@ CorrMatrix <- LCscale_data %>%
 
 CorrMatrix
 
+stats::cor.test(LCscale_data$LC_overallScore, LCscale_data$S_overallScore, method = "pearson")
+
 ```
 
 ## Group Differences
 
 ### LC Score
+
+A t-test was used to test the whether the difference in the overall listener comfort scores are different between the participants who listened to the Dysarthria talker and those who listened to the HC talker. There was no significant different (t(8)=-.5137, p=.6213).
 
 ```{r}
 
@@ -149,6 +164,8 @@ LC_diff
 
 ### Scholderle Overall Score
 
+A t-test was used to test the whether the difference in the overall Schölderle attitdes scale scores are different between the participants who listened to the Dysarthria talker and those who listened to the HC talker. There was no significant different (t(8)=-1.3578, p=.2116).
+
 ```{r}
 
 # Assumption Check
@@ -172,6 +189,8 @@ S_diff
 
 ### Scholderle Cognition Subscore
 
+A Mann Whitney U test was used to test the whether the difference in the overall Schölderle attitdes scale scores are different between the participants who listened to the Dysarthria talker and those who listened to the HC talker. (assumptions for the t-test were not met) There was no significant different (U=11, p=.8335).
+
 ```{r}
 
 # Assumption Check
@@ -186,14 +205,16 @@ with(LCscale_data, shapiro.test(S_cogn_score[Speaker == "Dysarthria"]))
 res.ftest.Cogn <- var.test(S_cogn_score ~ Speaker, data = LCscale_data)
 res.ftest.Cogn
 
-# Model Results
+# Model Results (Mann Whitney U Test)
 
-Cogn_diff <- t.test(HC$S_cogn_score, Dysarthria$S_cogn_score, var.equal = T)
-Cogn_diff
+Cogn_MW <- wilcox.test(S_cogn_score ~ Speaker, data = LCscale_data)
+Cogn_MW
 
 ```
 
 ### Scholderle Personality Subscore
+
+A t-test was used to test the whether the difference in the personality subscore for the Schölderle attitdes scale are different between the participants who listened to the Dysarthria talker and those who listened to the HC talker. There was no significant different (t(8)=-1.423, p=.1925).
 
 ```{r}
 
@@ -217,6 +238,8 @@ Personality_diff
 ```
 
 ### Emotion
+
+A t-test was used to test the whether the difference in the personality subscore for the Schölderle attitdes scale are different between the participants who listened to the Dysarthria talker and those who listened to the HC talker. There was no significant different (t(8)=-1.6493, p=.1377).
 
 ```{r}
 
