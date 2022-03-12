@@ -108,6 +108,18 @@ S_score_plot
 Score_plots <- ggarrange(LC_score_plot, S_score_plot, common.legend = T, legend = "bottom", labels = c("A", "B"), nrow = 1, ncol = 2)
 ggsave("Plots/Score_plots.png", plot = last_plot(), width = 10, height = 5, units = "in", scale = .8)
 
+Scatterplot <- LCscale_data %>%
+  ggplot() +
+  aes(x = S_overallScore,
+      y = LC_overallScore) +
+  geom_point() +
+  geom_smooth(method = "lm", se = T, color = "#782F40", fill = "light grey") +
+  xlab("Attitudes Rating Overall Scale") +
+  ylab("Listener Comfort Overall Score") +
+  theme_classic()
+
+ggsave("Plots/LC_Scholderle_scatterplot.png", plot = last_plot(), width = 10, height = 10, units = "in", scale = .8)
+
 ```
 
 
