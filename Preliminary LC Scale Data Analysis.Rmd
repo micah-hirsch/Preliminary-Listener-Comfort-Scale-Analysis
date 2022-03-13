@@ -86,7 +86,7 @@ LC_score_plot <- Descriptives_bySpeaker %>%
   aes(x = Speaker,
       y = LC_Score,
       fill = Speaker) +
-  geom_col(stat = "identity") +
+  geom_col(stat = "identity", fill = c("#782F40","#CEB888")) +
   geom_errorbar(aes(ymin = LC_Score-LC_sd, ymax = LC_Score+LC_sd), width = .2) +
   ylab("Listener Comfort Scale Score") +
   theme_classic()
@@ -98,9 +98,9 @@ S_score_plot <- Descriptives_bySpeaker %>%
   aes(x = Speaker,
       y = S_Score,
       fill = Speaker) +
-  geom_col(stat = "identity") +
+  geom_col(stat = "identity", fill = c("#782F40","#CEB888")) +
   geom_errorbar(aes(ymin = S_Score-S_sd, ymax = S_Score+S_sd), width = .2) +
-  ylab("Attitudes Scale Score") +
+  ylab("Listener Attitudes Scale Score") +
   theme_classic()
 
 S_score_plot
