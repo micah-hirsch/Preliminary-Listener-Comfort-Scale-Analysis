@@ -59,7 +59,7 @@ Descriptives_overall <- LCscale_data %>%
                    S_Score = mean(S_overallScore), S_sd = sd(S_overallScore),
                    S_Cogn = mean(S_cogn_score), S_Cogn_sd = sd(S_cogn_score),
                    S_personality = mean(S_personality_score), S_personality_sd = sd(S_personality_score),
-                   S_emotion = mean(S_emotion_score), LC_sd = sd(S_emotion_score))
+                   S_emotion = mean(S_emotion_score), S_emotion_sd = sd(S_emotion_score))
 
 Descriptives_overall
 
@@ -69,7 +69,7 @@ Descriptives_bySpeaker <- LCscale_data %>%
                    S_Score = mean(S_overallScore), S_sd = sd(S_overallScore),
                    S_Cogn = mean(S_cogn_score), S_Cogn_sd = sd(S_cogn_score),
                    S_personality = mean(S_personality_score), S_personality_sd = sd(S_personality_score),
-                   S_emotion = mean(S_emotion_score), LC_sd = sd(S_emotion_score))
+                   S_emotion = mean(S_emotion_score), S_emotion_sd = sd(S_emotion_score))
 
 Descriptives_bySpeaker
 
@@ -310,7 +310,7 @@ Descriptives_byGender <- HC %>%
                    S_Score = mean(S_overallScore), S_sd = sd(S_overallScore),
                    S_Cogn = mean(S_cogn_score), S_Cogn_sd = sd(S_cogn_score),
                    S_personality = mean(S_personality_score), S_personality_sd = sd(S_personality_score),
-                   S_emotion = mean(S_emotion_score), LC_sd = sd(S_emotion_score))
+                   S_emotion = mean(S_emotion_score), S_emotion_sd = sd(S_emotion_score))
 
 Descriptives_byGender
 
@@ -356,7 +356,7 @@ Descriptives_byCSD <- LCscale_data %>%
                    S_Score = mean(S_overallScore), S_sd = sd(S_overallScore),
                    S_Cogn = mean(S_cogn_score), S_Cogn_sd = sd(S_cogn_score),
                    S_personality = mean(S_personality_score), S_personality_sd = sd(S_personality_score),
-                   S_emotion = mean(S_emotion_score), LC_sd = sd(S_emotion_score))
+                   S_emotion = mean(S_emotion_score), S_emotion_sd = sd(S_emotion_score))
 
 Descriptives_byCSD
 
