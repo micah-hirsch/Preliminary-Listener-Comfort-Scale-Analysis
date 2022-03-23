@@ -320,7 +320,7 @@ Comparing mean and standard deviation of scores for participants familiar with C
 
 ## Descriptives
 
-###For the LC Overall Score
+For the LC Overall Score
 
 Dysarthria Talker:
 Familiar with CSD: mean = 4.52, SD = .38
@@ -330,7 +330,7 @@ HC Talker:
 Familiar with CSD: mean = 5.19, SD = .42
 Not Familiar with CSD: mean = 3.72, SD = .94
 
-###For the Overall Schölderle Score
+For the Overall Schölderle Score
 
 Dysarthria Talker:
 Familiar with CSD: mean = 4.17, SD = .19
