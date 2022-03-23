@@ -73,6 +73,8 @@ Descriptives_bySpeaker <- LCscale_data %>%
 
 Descriptives_bySpeaker
 
+rio::export(Descriptives_bySpeaker, "Descriptives_bySpeaker.csv")
+
 ```
 
 ## Data Vis
@@ -312,6 +314,8 @@ Descriptives_byGender <- HC %>%
 
 Descriptives_byGender
 
+rio::export(Descriptives_byGender, "Descriptives_byGender.csv")
+
 ```
 
 # Comparison Based on Familiarity with CSD
@@ -355,6 +359,8 @@ Descriptives_byCSD <- LCscale_data %>%
                    S_emotion = mean(S_emotion_score), LC_sd = sd(S_emotion_score))
 
 Descriptives_byCSD
+
+rio::export(Descriptives_byCSD, "Descriptives_byCSD.csv")
 
 ```
 

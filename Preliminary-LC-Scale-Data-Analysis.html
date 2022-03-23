@@ -431,6 +431,7 @@ Descriptives_bySpeaker</code></pre>
 ## 1 Dysarthria     4.84 0.540    4.46 0.509   4.32     0.748          4.43
 ## 2 HC             4.6  1.04     4.07 0.391   4.22     0.576          4.13
 ## # … with 2 more variables: S_personality_sd &lt;dbl&gt;, S_emotion &lt;dbl&gt;</code></pre>
+<pre class="r"><code>rio::export(Descriptives_bySpeaker, &quot;Descriptives_bySpeaker.csv&quot;)</code></pre>
 </div>
 <div id="data-vis" class="section level2">
 <h2>Data Vis</h2>
@@ -800,6 +801,7 @@ Descriptives_byGender &lt;- HC %&gt;%
 ## 1 HC      Man        4.53 1.30     4.03 0.601   4.75     0.177          4   
 ## 2 HC      Woman      4.65 0.694    4.1  0.350   3.88     0.433          4.22
 ## # … with 2 more variables: S_personality_sd &lt;dbl&gt;, S_emotion &lt;dbl&gt;</code></pre>
+<pre class="r"><code>rio::export(Descriptives_byGender, &quot;Descriptives_byGender.csv&quot;)</code></pre>
 </div>
 </div>
 <div id="comparison-based-on-familiarity-with-csd" class="section level1">
@@ -836,6 +838,7 @@ Descriptives_byCSD &lt;- LCscale_data %&gt;%
 ## 4 HC         Yes              5.19 0.419    4.35 0.100    4.38     0.433
 ## # … with 3 more variables: S_personality &lt;dbl&gt;, S_personality_sd &lt;dbl&gt;,
 ## #   S_emotion &lt;dbl&gt;</code></pre>
+<pre class="r"><code>rio::export(Descriptives_byCSD, &quot;Descriptives_byCSD.csv&quot;)</code></pre>
 </div>
 </div>
 
