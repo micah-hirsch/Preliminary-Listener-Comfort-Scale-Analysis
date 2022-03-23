@@ -262,3 +262,87 @@ Emotion_diff
 
 ```
 
+# Male and Female Score Comparisons
+
+
+The two men in our study only rated the healthy control speaker. So this descriptive analysis will only reflect ratings given for the healthy control talker (n=5). 
+
+## Descriptives
+
+For the LC Overall Score
+
+Men: mean = 4.53, SD = 1.30 
+Women: mean = 4.65, SD = .69
+
+For the Overall Schölderle Score
+
+Men: mean = 4.03, SD = .60
+Women: 4.10, SD = .35
+
+Schölderle mean and SD for subscale scores reported in output below.
+
+```{r}
+
+# Filtering out the listeners who rated the talker with dysarthria. This way we have a dataset with only the ratings for the HC talker.
+
+HC <- LCscale_data %>%
+  dplyr::filter(Speaker == "HC")
+
+# Descriptive Statistics
+
+Descriptives_byGender <- HC %>%
+  dplyr::group_by(Speaker, Gender) %>%
+  dplyr::summarize(LC_Score = mean(LC_overallScore), LC_sd = sd(LC_overallScore),
+                   S_Score = mean(S_overallScore), S_sd = sd(S_overallScore),
+                   S_Cogn = mean(S_cogn_score), S_Cogn_sd = sd(S_cogn_score),
+                   S_personality = mean(S_personality_score), S_personality_sd = sd(S_personality_score),
+                   S_emotion = mean(S_emotion_score), LC_sd = sd(S_emotion_score))
+
+Descriptives_byGender
+
+```
+
+# Comparison Based on Familiarity with CSD
+
+Comparing mean and standard deviation of scores for participants familiar with CSD vs. unfamiliar with CSD
+
+## Descriptives
+
+###For the LC Overall Score
+
+Dysarthria Talker:
+Familiar with CSD: mean = 4.52, SD = .38
+Not Familiar with CSD: mean = 5.31, SD = .71
+
+HC Talker:
+Familiar with CSD: mean = 5.19, SD = .42
+Not Familiar with CSD: mean = 3.72, SD = .94
+
+###For the Overall Schölderle Score
+
+Dysarthria Talker:
+Familiar with CSD: mean = 4.17, SD = .19
+Not Familiar with CSD: mean = 4.90, SD = .57
+
+HC Talker:
+Familiar with CSD: mean = 4.35, SD = .10
+Not Familiar with CSD: mean = 3.65, SD = .07
+
+Schölderle mean and SD for subscale scores reported in output below.
+
+```{r}
+
+# Descriptive Statistics
+
+Descriptives_byCSD <- LCscale_data %>%
+  dplyr::group_by(Speaker, Familiar_CSD) %>%
+  dplyr::summarize(LC_Score = mean(LC_overallScore), LC_sd = sd(LC_overallScore),
+                   S_Score = mean(S_overallScore), S_sd = sd(S_overallScore),
+                   S_Cogn = mean(S_cogn_score), S_Cogn_sd = sd(S_cogn_score),
+                   S_personality = mean(S_personality_score), S_personality_sd = sd(S_personality_score),
+                   S_emotion = mean(S_emotion_score), LC_sd = sd(S_emotion_score))
+
+Descriptives_byCSD
+
+```
+
